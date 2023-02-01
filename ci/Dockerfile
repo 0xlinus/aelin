@@ -5,7 +5,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Clone the repository
-RUN apk update && apk add git
+RUN apk update && apk add git python3 g++ make
 RUN git clone https://github.com/AelinXYZ/aelin.git .
 RUN git checkout e2e-devops
 
@@ -25,7 +25,7 @@ RUN rm -rf ./node_modules
 
 FROM linuzeth/aelin-anvil as builder
 
-RUN apk update && apk add bash
+RUN apk update && apk add bash 
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

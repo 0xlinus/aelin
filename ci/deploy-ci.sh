@@ -24,7 +24,7 @@ tresury="0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
 private_key="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 addresses=()
 
-echo "*******  DEPLOYING ALL CONTRACTS TO PERFORM END-TO-END TESTS ********"
+echo "*******  DEPLOYING ALL CONTRACTS TO ANVIL ********"
 
 # 1. Deploying contracts
 for i in {0..6}
@@ -44,7 +44,7 @@ libraries = [
     \"contracts/libraries/AelinAllowList.sol:AelinAllowList:${addresses[2]}\",
     \"contracts/libraries/MerkleTree.sol:MerkleTree:${addresses[1]}\",
     \"contracts/libraries/AelinNftGating.sol:AelinNftGating:${addresses[3]}\"
-]" >> foundry.toml
+]" >> ../foundry.toml
 
 # 3. Deploying AelinUpFrontDeal
 output_aelinUpFrontDeal=$(forge create --rpc-url http://anvil:8545 --private-key $private_key contracts/AelinUpFrontDeal.sol:AelinUpFrontDeal)
@@ -73,5 +73,9 @@ output_usdcToken=$(forge create --rpc-url http://anvil:8545 --private-key $priva
 address_usdcToken=$(echo "$output_usdcToken" | grep "Deployed to: " | awk '{print $3}')
 echo "USDC_address=$address_usdcToken" >> .env.linuz
 echo "USDC_address=$address_usdcToken"
+output_wethToken=$(forge create --rpc-url http://anvil:8545 --private-key $private_key contracts/WETH.sol:WETH)
+address_wethToken=$(echo "$output_wethToken" | grep "Deployed to: " | awk '{print $3}')
+echo "WETH_address=$address_wethToken" >> .env.linuz
+echo "WETH_address=$address_wethToken"
 
 echo "******* DONE! *******"
